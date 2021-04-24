@@ -28,7 +28,7 @@ RESTful API for Cab Booking System
 
 3. To get user trip history - `localhost:<port number>/zayacab/<commuter_id>/history`
 
-4. To get user trip history - `localhost:<port number>/zayacab/<driver_id>/history`
+4. To get driver trip history - `localhost:<port number>/zayacab/<driver_id>/history`
 
 5. To get the user location - `localhost:<port number>/zayacab/user/location/<commuter_id>`
 
@@ -38,3 +38,4 @@ RESTful API for Cab Booking System
 
 8. Get the list of all available drivers- `localhost:<port number>/zayacab/driver/available`
 
+# Cab-booking
