@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-  
+
+
 class Driver(models.Model):
     
     STATUS_OPTIONS = (
@@ -16,14 +17,16 @@ class Driver(models.Model):
     def __str__(self):
         return str(self.name)
 
+
 class Commuter(models.Model):
     name = models.CharField(max_length=50)
     user = models.OneToOneField(User, on_delete=models.CASCADE)   
     lat = models.FloatField(blank=True, null=True)
     long = models.FloatField(blank=True, null=True)
 
-    def __str__(self) :
+    def __str__(self):
         return str(self.name)
+
 
 class Trip(models.Model):
     commuter = models.ForeignKey(Commuter, null=True, related_name='commuter', on_delete=models.CASCADE)

@@ -6,15 +6,17 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import render
 
+
 def index(request):
     return render(request, 'zayacab/index.html')
+
 
 # URL: zayacab/driver/register
 # POST Params: [username, password]
 class RegisterDriver(APIView):
 
     def post(self, request):
-        serializer = UserSerializer(data = request.data)     
+        serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             data = serializer.data
             try:
@@ -27,6 +29,7 @@ class RegisterDriver(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response({"error": "Invalid Params or username may already exist"})
+
 
 # URL: zayacab/user/register 
 # POST Params: [username, password]
@@ -64,7 +67,7 @@ def BookCab(request, commuter_id, driver_id):
         driver.status = "BK"
         driver.save()
         trip = Trip.objects.create(commuter=commuter, driver=driver)
-        serializer = TripSerialier(trip, data=request.data)
+        serializer = TripSerializer(trip, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -78,7 +81,7 @@ def BookCab(request, commuter_id, driver_id):
 
 #URL: /zayacab/driver/available
 @api_view(['GET'])
-def DiversAvailable(request):
+def DriversAvailable(request):
     if request.method == 'GET':
         drivers = Driver.objects.filter(status="AV")
         serializer = DriverSerializer(drivers, many=True)

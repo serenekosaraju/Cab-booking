@@ -2,11 +2,13 @@ from rest_framework import serializers
 from .models import *
 from django.contrib.auth.models import User
 
+
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
         fields = ('username', 'password')
+
 
 class TripUserSerializer(serializers.ModelSerializer): 
 
@@ -14,11 +16,13 @@ class TripUserSerializer(serializers.ModelSerializer):
         model = Trip
         fields = ('commuter', 'source',)
 
+
 class TripDriverSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Trip
         fields = ('driver', 'source',)
+
 
 class DriverSerializer(serializers.ModelSerializer):
 
@@ -32,7 +36,7 @@ class DriverSerializer(serializers.ModelSerializer):
         exclude = ('name', 'user',)
 
 
-class TripSerialier(serializers.ModelSerializer):
+class TripSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Trip
