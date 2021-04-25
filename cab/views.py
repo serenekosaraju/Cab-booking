@@ -8,10 +8,10 @@ from django.shortcuts import render
 
 
 def index(request):
-    return render(request, 'zayacab/index.html')
+    return render(request, 'cab/index.html')
 
 
-# URL: zayacab/driver/register
+# URL: cab/driver/register
 # POST Params: [username, password]
 class RegisterDriver(APIView):
 
@@ -20,7 +20,7 @@ class RegisterDriver(APIView):
         if serializer.is_valid():
             data = serializer.data
             try:
-                user = User.objects.create_user(username=data['username'], password=['password'])
+                user = User.objects.create_user(username=data['username'], password=data['password'])
                 user.save()
             except:
                 return Response({"error": "Username already exists"})
@@ -31,16 +31,16 @@ class RegisterDriver(APIView):
             return Response({"error": "Invalid Params or username may already exist"})
 
 
-# URL: zayacab/user/register 
+# URL: cab/commuter/register
 # POST Params: [username, password]
-class RegisterUser(APIView):
+class RegisterCommuter(APIView):
 
     def post(self, request):
-        serializer = UserSerializer(data = request.data)
+        serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             data = serializer.data
             try:
-                user = User.objects.create_user(username=data['username'], password=['password'])
+                user = User.objects.create_user(username=data['username'], password=data['password'])
                 user.save()
             except:
                 return Response({"error": "Username already exists"})
@@ -51,7 +51,7 @@ class RegisterUser(APIView):
             return Response({"error": "Invalid Params or username may already exist"})
 
 
-#URL: zayacab/booking/<commuter_id>/<driver_id>
+#URL: cab/booking/<commuter_id>/<driver_id>
 #POST: Params [source, destination, fare]
 @api_view(['POST'])
 def BookCab(request, commuter_id, driver_id):
@@ -79,7 +79,7 @@ def BookCab(request, commuter_id, driver_id):
         return Response("Driver with {} is Offline".format(driver_id))
 
 
-#URL: /zayacab/driver/available
+#URL: /cab/driver/available
 @api_view(['GET'])
 def DriversAvailable(request):
     if request.method == 'GET':
@@ -88,20 +88,20 @@ def DriversAvailable(request):
         return Response(serializer.data)
 
 
-#URL: /zayacab/user/<commuter_id>/history
+#URL: /cab/commuter/<commuter_id>/history
 @api_view(['GET'])
-def TripHistoryUser(request, commuter_id):
+def TripHistoryCommuter(request, commuter_id):
     if request.method == 'GET':
         try:
             commuter = Commuter.objects.get(id=commuter_id)
         except:
-            return Response({"error": "Driver with ID {} is unavailable".format(commuter_id)})
+            return Response({"error": "Commuter with ID {} is unavailable".format(commuter_id)})
         trips = Trip.objects.filter(commuter=commuter)
         serializer = TripUserSerializer(trips, many=True)
         return Response(serializer.data)
 
 
-# URL: /zayacab/driver/<driver_id>/history
+# URL: /cab/driver/<driver_id>/history
 @api_view(['GET'])
 def TripHistoryDriver(request, driver_id):
     if request.method == 'GET':
@@ -114,7 +114,7 @@ def TripHistoryDriver(request, driver_id):
         return Response(serializer.data)
 
 
-# URL: /zayacab/update/<driver_id>
+# URL: /cab/update/<driver_id>
 # POST Params: [status]
 # status choices: ['AV', 'BK', 'OFF]
 @api_view(['POST'])
@@ -132,10 +132,10 @@ def ChangeStatus(request, driver_id):
             return Response({"error": "Invalid params"})
 
 
-# URL: /zayacab/user/location/commuter_id
+# URL: /cab/commuter/location/commuter_id
 # POST Params [lat, long]
 @api_view(['GET', 'POST'])
-def UserLocation(request, commuter_id):
+def CommuterLocation(request, commuter_id):
     try:
         commuter = Commuter.objects.get(id=commuter_id)
     except:

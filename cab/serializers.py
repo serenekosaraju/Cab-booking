@@ -10,6 +10,13 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('username', 'password')
 
 
+class CommuterSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Commuter
+        fields = ('username', 'password')
+
+
 class TripUserSerializer(serializers.ModelSerializer): 
 
     class Meta:
@@ -33,7 +40,7 @@ class DriverSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Driver
-        exclude = ('name', 'user',)
+        exclude = ('username', 'user', 'password')
 
 
 class TripSerializer(serializers.ModelSerializer):
